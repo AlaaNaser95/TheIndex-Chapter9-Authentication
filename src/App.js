@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-
+import PrivateRoute from "./PrivateRoute";
 // Actions
 import * as actionCreators from "./store/actions";
 
@@ -15,6 +15,7 @@ import Login from "./LoginForm";
 class App extends Component {
   componentDidMount() {
     this.props.fetchAllAuthors();
+    this.props.checkToken();
   }
 
   render() {
@@ -41,7 +42,8 @@ class App extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchAllAuthors: () => dispatch(actionCreators.fetchAuthors())
+    fetchAllAuthors: () => dispatch(actionCreators.fetchAuthors()),
+    checkToken: () => dispatch(actionCreators.checkForExpiredToken())
   };
 };
 
